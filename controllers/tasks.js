@@ -1,21 +1,49 @@
-const getAllTasks = (req,res) => {
-    res.send('all items FROMFILES')
+const Task = require('../models/Task')
+
+const getAllTasks = async (req,res) => {
+   try {
+     const tasks = await Task.find({})
+     res.status(200).json({tasks})
+   } catch (error) {
+     res.status(500).json({ msg:error });
+   }
 }
 
-const createTasks = (req,res) => {
-    res.json(req.body)
+const createTasks = async (req,res) => {
+   try {
+      const task = await Task.create(req.body)
+      res.status(201).json({ task })
+   } catch (error) {
+      res.status(500).json({msg:error})
+   }
 }
 
-const getTask = (req, res) => {
-  res.send({id: req.params.id});
+const getTask = async (req, res) => {
+    try {
+      const {id:taskID } = req.params
+      const task = await Task.findOne({_id:taskID});
+      res.status(201).json({ task });
+    } catch (error) {
+      res.status(500).json({ msg: error });
+    }
 }
 
-const updateTask = (req,res) => {
-    res.send('update tasks')
+const updateTask = async (req,res) => {
+    try {
+      const task = await Task.create(req.body);
+      res.status(201).json({ task });
+    } catch (error) {
+      res.status(500).json({ msg: error });
+    }
 }
 
 const deleteTask = (req,res) => {
-    res.send('delete a task')
+     try {
+       const task = await Task.create(req.body);
+       res.status(201).json({ task });
+     } catch (error) {
+       res.status(500).json({ msg: error });
+     }
 }
 
 module.exports = {
